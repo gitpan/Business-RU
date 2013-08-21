@@ -9,16 +9,16 @@ requires 'inn';
 sub validate_inn {
     my $self = shift;
 
-    return $self -> _validate_inn_10()
-        if length $self -> inn() == 10;
+    return $self -> _validate_individual_inn()
+        if $self -> _is_individual();
 
-    return $self -> _validate_inn_12()
-        if length $self -> inn() == 12;
+    return $self -> _validate_company_inn()
+        if $self -> _is_company();
 
     return;
 }
 
-sub _validate_inn_10 {
+sub _validate_company_inn {
     my $self = shift;
 
     my @weights = qw(2 4 10 3 5 9 4 6 8 0);
@@ -33,7 +33,7 @@ sub _validate_inn_10 {
 }
 
 
-sub _validate_inn_12 {
+sub _validate_individual_inn {
     my $self = shift;
 
     my @weights = qw(3 7 2 4 10 3 5 9 4 6 8 0);
@@ -53,6 +53,32 @@ sub _validate_inn_12 {
         substr( $self -> inn(), 11, 1 ) == ( $result_12 % 11 % 10 );
 }
 
+sub is_individual {
+    my $self = shift;
+
+    return ( $self -> validate_inn() )
+        ? $self -> _is_individual()
+        : undef;
+}
+
+sub _is_individual {
+    my $self = shift;
+    return length $self -> inn() == 12;
+}
+
+sub is_company {
+    my $self = shift;
+
+    return ( $self -> validate_inn() )
+        ? $self -> _is_company()
+        : undef;
+}
+
+sub _is_company {
+    my $self = shift;
+    return length $self -> inn()  == 10;
+}
+
 1;
 
 __END__
@@ -62,10 +88,6 @@ __END__
 =head1 NAME
 
 Business::RU::INN
-
-=head1 VERSION
-
-version 0.1
 
 =head1 SYNOPSIS
 
@@ -83,10 +105,18 @@ version 0.1
         ... process error ...
     }
 
+    if( $decorator -> is_company() ) {
+        ... process company data ..
+    }
+
+    if( $decorator -> is_individual() ) {
+        ... process data ..
+    }
+
 =head1 DESCRIPTION
 
 Validate russian individual taxpayer number.
-B<NOTE:> This role expects that it's consuming class will have a C<inn> method.
+B<NOTE:> This role expects that it's consuming class will have a C<inn()> method.
 
 =head1 METHODS
 
@@ -95,13 +125,23 @@ B<NOTE:> This role expects that it's consuming class will have a C<inn> method.
 Validate INN. 
 return true if INN valid
 
-=head2 _validate_inn_10()
+=head2 _validate_individual_inn()
 
-Validate short INN. Internal method.
+Validate short INN. 
+Internal method.
 
-=head2 _validate_inn_12()
+=head2 _validate_company_inn()
 
-Validate long INN. Internal method.
+Validate long INN. 
+Internal method.
+
+=head2 is_individual()
+
+Returns true if INN personal
+
+=head2 is_company()
+
+Raturns trus if it's company.
 
 =head1 SEE ALSO
 

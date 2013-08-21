@@ -55,17 +55,13 @@ __END__
 
 Business::RU::BankAccount
 
-=head1 VERSION
-
-version 0.1
-
 =head1 SYNOPSIS
 
     package myDecorator;
     use Moose;
-    has 'current_account' => ( is => 'ro', isa => 'Int' );
+    has 'current_account'       => ( is => 'ro', isa => 'Int' );
     has 'correspondent_account' => ( is => 'ro', isa => 'Int' );
-    has 'bic' => ( is => 'ro', isa => 'Int' );
+    has 'bic'                   => ( is => 'ro', isa => 'Int' );
     with 'Business::RU::BankAccount';
 
     ...

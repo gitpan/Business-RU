@@ -1,4 +1,4 @@
-use Test::More tests => 11;
+use Test::More tests => 19;
 
 use strict;
 use warnings;
@@ -36,4 +36,34 @@ use_ok( 'Business::RU::INN' );
             ok !$object -> validate_inn(), sprintf 'check invalid INN:%s', $inn;
         }        
     }
+}
+
+#is_individual()
+{
+    {
+        my $object = MyDecorator -> new( inn => 7702581366 );
+        ok !$object -> is_individual(), 'check individual inn';
+        ok $object -> is_company(),     'it is company';
+    }
+
+    {
+        my $object = MyDecorator -> new( inn => 7702581360 );
+        ok !$object -> is_individual(), 'invalid inn';
+        ok !$object -> is_company(),    'invalid inn';
+    }
+}
+
+#is_company()
+{
+    {
+        my $object = MyDecorator -> new( inn => 504308599677 );
+        ok $object -> is_individual(), 'it is individual inn';
+        ok !$object -> is_company(),   'check company inn';        
+    }    
+
+    {
+        my $object = MyDecorator -> new( inn => 50430859960 );
+        ok !$object -> is_individual(), 'invalid inn';
+        ok !$object -> is_company(),   'invalid inn';        
+    }    
 }

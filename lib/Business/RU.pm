@@ -3,7 +3,7 @@ package Business::RU;
 use strict;
 use warnings;
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 1;
 
@@ -17,7 +17,7 @@ Business::RU
 
 =head1 VERSION
 
-version 0.1
+version 0.2
 
 =head1 DESCRIPTION
 

@@ -34,10 +34,6 @@ __END__
 
 Business::RU::OKPO
 
-=head1 VERSION
-
-version 0.1
-
 =head1 SYNOPSIS
 
     package myDecorator;

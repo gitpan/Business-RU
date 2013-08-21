@@ -5,5 +5,5 @@ use warnings;
 
 use_ok( 'Business::RU' );
 
-is Business::RU -> VERSION(), '0.1'
+is Business::RU -> VERSION(), '0.2'
     => 'compare version';
